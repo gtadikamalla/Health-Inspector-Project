@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Appointment Booking Form</title>
+</head>
+<body>
+<div align="center">
+    <marquee behavior="alternate" bgcolor="green">
+        <h1>Welcome to Appointment Booking Form</h1>
+    </marquee>
+    <form th:action="@{/appointmentDetails}" th:object="${username}" method="post">
+
+        <label for="patient_name">Patient Name:</label>
+        <input type="text" id="patient_name" th:field="*{patient_name}" pattern="^[A-Za-z]+$" title="It must contain only alphabets"/><br><br>
+
+        <label for="patient_locality">Patient Locality:</label>
+        <input type="text" id="patient_locality" th:field="*{patient_locality}" title="Please enter location"/><br><br>
+
+        <label for="purpose_of_visit">Purpose of Visit:</label>
+        <input type="text" id="purpose_of_visit" th:field="*{purpose_of_visit}" pattern="^[A-Za-z]+$" title="It must contain only alphabets"/><br><br>
+
+        <label>Gender:</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Male <input type="radio" th:field="*{gender}" value="Male"/> &nbsp;&nbsp;&nbsp;
+        Female <input type="radio" th:field="*{gender}" value="Female"/> <br><br>
+
+        <label for="age">Age:</label>
+        <input type="text" id="age" th:field="*{age}" pattern="^[0-9]+$" title="It must contain 1 or 2 digits"/><br><br>
+
+        <label for="contact_number">Mobile Number:</label>
+        <input type="text" id="contact_number" th:field="*{contact_number}" pattern="[6-9]{1}[0-9]{9}" title="It must contain 10 digits and start with 6 to 9"/><br><br>
+
+        <label for="clinic_id">Clinic Id:</label>
+        <input type="text" id="clinic_id" th:field="*{clinic_id}" pattern="^[0-9]+$" title="It contains only numbers"/><br><br>
+
+        <input type="submit" class="btn success" value="Submit">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button><a href="/">Back</a></button>
+    </form>
+</div>
+</body>
+</html>

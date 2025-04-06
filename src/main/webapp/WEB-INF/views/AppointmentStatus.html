@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Appointment Status</title>
+    <style>
+        table {
+            font-family: Arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+</head>
+<body>
+<form method="post">
+    <table>
+        <tr>
+            <th>Appointment Id</th>
+            <th>Patient Name</th>
+            <th>Patient Locality</th>
+            <th>Patient Problem</th>
+            <th>Clinic Id</th>
+            <th>Gender</th>
+            <th>Age</th>
+            <th>Contact Number</th>
+            <th>Status</th>
+        </tr>
+        <tr th:each="appointmentdetails : ${statusappointment}">
+            <td th:text="${appointmentdetails.appointmentId}"></td>
+            <td th:text="${appointmentdetails.patient_name}"></td>
+            <td th:text="${appointmentdetails.patient_locality}"></td>
+            <td th:text="${appointmentdetails.purpose_of_visit}"></td>
+            <td th:text="${appointmentdetails.clinic_id}"></td>
+            <td th:text="${appointmentdetails.gender}"></td>
+            <td th:text="${appointmentdetails.age}"></td>
+            <td th:text="${appointmentdetails.contact_number}"></td>
+            <td th:text="${appointmentdetails.status}"></td>
+        </tr>
+    </table>
+</form>
+<div>
+    <a href="/">Logout</a>
+</div>
+</body>
+</html>

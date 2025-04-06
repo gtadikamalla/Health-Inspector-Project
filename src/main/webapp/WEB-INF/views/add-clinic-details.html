@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Add Clinic Details</title>
+</head>
+<body>
+<div align="center">
+    <marquee behavior="alternate" bgcolor="green">
+        <h1>ADD CLINIC</h1>
+    </marquee>
+    <form th:action="@{/PostClinicDetails}" th:object="${clinicdetails}" method="post" onsubmit="return Cvalidation()">
+
+        <label for="clinic_id">Clinic Id</label>
+        <input type="text" id="clinic_id" th:field="*{clinic_id}" pattern="^[A-Za-z]+$"/><br>
+
+        <label for="clinic_name">Clinic Name</label>
+        <input type="text" id="clinic_name" th:field="*{clinic_name}" pattern="^[A-Za-z]+$"/><br>
+
+        <label for="address">Address</label>
+        <input type="text" id="address" th:field="*{address}" pattern="^[A-Za-z]+$"/><br>
+
+        <label for="facilities_available">Facilities Available</label>
+        <input type="text" id="facilities_available" th:field="*{facilities_available}" /><br>
+
+        <label for="contact_number">Contact Number</label>
+        <input type="text" id="contact_number" th:field="*{contact_number}" pattern="[6-9]{1}[0-9]{9}"/><br>
+
+        <label for="website">Website</label>
+        <input type="url" id="website" th:field="*{website}" pattern="https?://.+"/><br>
+
+        <label for="pincode">Locality/Pincode</label>
+        <input type="text" id="pincode" th:field="*{pincode}" /><br>
+
+        <label for="speciality">Speciality:</label>
+        <select id="speciality" th:field="*{speciality}">
+            <option th:each="profession : ${professionList}" th:value="${profession}" th:text="${profession}"></option>
+        </select><br>
+
+        <label for="availability">Availability</label>
+        <input type="text" id="availability" th:field="*{availability}"/><br>
+
+        <input type="submit" value="Submit"/><br>
+        <a href="/">Back</a>
+    </form>
+</div>
+</body>
+</html>
