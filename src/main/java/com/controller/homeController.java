@@ -22,7 +22,7 @@ public class homeController {
 
 	@RequestMapping("/")
 	public String gethomepage() {
-		return "index";
+		return "index1";
 	}
 
 	@RequestMapping("/AdminLogin")

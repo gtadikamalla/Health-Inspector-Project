@@ -3,7 +3,7 @@ package com.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation./getRResolpping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,7 +17,7 @@ public class patientLoginController {
 	@Autowired	
 	public PLDao Pldao;
 	
-	@getRResolpping("/patientlogin")
+	@GetMapping("/patientlogin")
 	public ModelAndView patientlogin(@RequestParam("password") String password, @RequestParam("id") int id, ModelAndView model) {
 		
 		PloginModel patientLoginCheck= Pldao.patientLoginCheck(id,password);

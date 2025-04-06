@@ -2,7 +2,9 @@ package com.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
+
+import jakarta.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
