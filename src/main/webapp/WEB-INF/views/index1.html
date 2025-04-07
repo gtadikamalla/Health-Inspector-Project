@@ -262,7 +262,7 @@
             // Required fields with patterns
             const requiredFields = [
                 { name: 'name', label: 'Name', pattern: /^[A-Za-z\s]+$/, error: 'Name must contain only alphabets and spaces.' },
-                { name: 'email', label: 'Email', pattern: /^\w+(\.-)?(\w+(\.-)?)*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/, error: 'Please enter a valid email address (e.g., abc@gmail.com).' },
+                { name: 'email', label: 'Email', pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, error: 'Please enter a valid email address (e.g., abc@gmail.com).' },
                 { name: 'message', label: 'Message', error: 'Message is required.' }
             ];
 
