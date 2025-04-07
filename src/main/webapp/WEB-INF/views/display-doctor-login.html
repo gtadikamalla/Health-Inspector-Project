@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Doctor Dashboard</title>
+</head>
+<body>
+<div align="center">
+    <marquee behavior="alternate" bgcolor="green">
+        <h1>Welcome Dr. <span th:text="${user.first_name}"></span> <span th:text="${user.last_name}"></span></h1>
+        <h1>Your Registration ID is: <span th:text="${user.id}"></span></h1>
+    </marquee>
+</div>
+
+<div align="center">
+    <button><a th:href="@{/addClinicDetails}">Add Clinic Details</a></button>
+    <button><a th:href="@{/prescription}">Prescription Form</a></button>
+    <button><a th:href="@{/getAllPrescriptionDetails}">Prescription</a></button>
+    <button><a th:href="@{/reportForm}">Help</a></button>
+</div>
+
+<form action="#" th:action="@{/appointments}" method="get">
+    View Appointments:
+    <input type="text" placeholder="Enter your clinic ID to view appointments" name="clinic_id" required />
+    <input type="submit" value="View Appointments" />
+</form>
+
+<form action="#" th:action="@{/getRResolution}" method="get">
+    Check Your Status:
+    <input type="text" placeholder="Enter Your Request ID" name="id" required />
+    <input type="hidden" name="userid" th:value="${user.id}" />
+    <input type="submit" value="View Resolution" />
+</form>
+
+<div align="right">
+    <a th:href="@{/}">Logout: Dr. <span th:text="${user.first_name}"></span> <span th:text="${user.last_name}"></span></a>
+</div>
+</body>
+</html>

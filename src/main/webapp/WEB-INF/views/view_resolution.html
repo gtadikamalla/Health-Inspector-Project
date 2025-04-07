@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Insert title here</title>
+</head>
+<body>
+
+<div align="center">
+    <table border="1">
+        <tr>
+            <th>Request Id</th>
+            <th>Issue</th>
+            <th>Description</th>
+            <th>Resolution</th>
+        </tr>
+        <th:block th:each="list1 : ${list}">
+            <tr>
+                <td th:text="${list1.id}"></td>
+                <td th:text="${list1.issue}"></td>
+                <td th:text="${list1.description}"></td>
+                <td th:text="${list1.model.resolution}"></td>
+            </tr>
+        </th:block>
+    </table>
+
+    <a href="/" th:href="@{/}">Logout</a>
+
+</div>
+</body>
+</html>

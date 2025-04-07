@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Resolution</title>
+</head>
+<body>
+
+<div align="center">
+    <marquee behavior="alternate" bgcolor="green">
+        <h1>Resolution</h1>
+    </marquee>
+
+    <form th:action="@{/postresolution}" method="post" th:object="${user}">
+        <table>
+            <tr>
+                <td><label for="id">Id:</label></td>
+                <td><input type="text" th:field="*{id}" th:value="${id}" /><br /></td>
+            </tr>
+            <tr>
+                <td><label for="resolution">Resolution:</label></td>
+                <td><textarea th:field="*{resolution}" cols="25" rows="5"></textarea><br /></td>
+            </tr>
+            <tr>
+                <td><button type="submit">Send</button></td>
+            </tr>
+        </table>
+    </form>
+    <a th:href="@{/}">Logout</a>
+</div>
+
+</body>
+</html>

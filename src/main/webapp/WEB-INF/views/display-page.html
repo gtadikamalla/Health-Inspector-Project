@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Registration Success</title>
+</head>
+<body>
+<div align="center">
+    <h1 style="color:green;">
+        <span th:text="${registration.first_name}"></span>
+        <span th:text="${registration.last_name}"></span>
+    </h1>
+    <h1>Registered Successfully!</h1>
+    <h1 style="color:green;">Your Registration ID is: <span th:text="${user.idd}"></span></h1>
+    <button><a th:href="@{/}">Go Homepage</a></button>
+</div>
+</body>
+</html>

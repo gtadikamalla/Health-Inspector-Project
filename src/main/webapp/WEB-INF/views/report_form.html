@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>Report Your Issue</title>
+</head>
+<body>
+<div align="center">
+  <marquee behavior="alternate" bgcolor="green">
+    <h1>Welcome <span th:text="${user.first_name}">First Name</span> <span th:text="${user.last_name}">Last Name</span></h1>
+    <h1>Your Registration ID is: <span th:text="${user.id}">User ID</span></h1>
+  </marquee>
+  <marquee behavior="alternate" bgcolor="green">
+    <h1>Report Your Issue</h1>
+  </marquee>
+
+  <form th:action="@{/postissue}" method="post" th:object="${issue}">
+    <table>
+      <tr>
+        <td><label for="issue">Issue:</label></td>
+        <td><input type="text" th:field="*{issue}" /><br /></td>
+      </tr>
+      <tr>
+        <td><label for="description">Description:</label></td>
+        <td><textarea th:field="*{description}" cols="25" rows="5"></textarea><br /></td>
+        <input type="hidden" th:field="*{userid}" th:value="${user.id}" />
+      </tr>
+      <tr>
+        <td><button type="submit">Send</button></td>
+      </tr>
+    </table>
+  </form>
+
+  <a href="/" th:href="@{/}">Logout</a>
+</div>
+</body>
+</html>

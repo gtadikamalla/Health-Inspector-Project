@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Prescription Page</title>
+</head>
+<body>
+
+<div align="center">
+    <h2>Prescription Page</h2>
+    <form th:action="@{/postPrescriptionDetails}" method="post" th:object="${PrescriptionDetails}">
+
+        <label for="symptoms">Symptoms: </label>
+        <input type="text" th:field="*{symptoms}" required="true"/><br>
+
+        <label for="diagnosis">Diagnosis: </label>
+        <input type="text" th:field="*{diagnosis}" required="true"/><br>
+
+        <label for="treatment_planned">Treatment Planned: </label>
+        <input type="text" th:field="*{treatment_planned}" required="true"/><br>
+
+        <label for="prescription">Prescription: </label>
+        <input type="text" th:field="*{prescription}"/><br>
+
+        <label for="revisit_required">Revisit Required: </label>
+        <input type="text" th:field="*{revisit_required}"/><br>
+
+        <label for="next_revisit_date">Next Revisit Date: </label>
+        <input type="text" th:field="*{next_revisit_date}"/><br>
+
+        <label for="frequency_revisit">Frequency Revisit: </label>
+        <input type="text" th:field="*{frequency_revisit}"/><br>
+
+        <label for="pappointmentid">Patient Appointment Id: </label>
+        <input type="text" th:field="*{pappointmentid}"/><br>
+
+        <input type="submit" value="Submit" /><br>
+        <a href="/" th:href="@{/}">Go Back</a>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List of Technical Issues</title>
+</head>
+<body>
+<marquee behavior="alternate" bgcolor="green">
+    <h1>List of Technical Issues</h1>
+</marquee>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Issue</th>
+        <th>Description about Issue</th>
+        <th>Registration Id</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="issue : ${issuelist}">
+        <td th:text="${issue.id}"></td>
+        <td th:text="${issue.issue}"></td>
+        <td th:text="${issue.description}"></td>
+        <td th:text="${issue.userid}"></td>
+        <td>
+            <a th:href="@{/postResolution/{id}(id=${issue.id})}">
+                <button>Give Resolution</button>
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div style="text-align: center; margin-top: 20px;">
+    <a th:href="@{/}">Logout</a>
+</div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Prescription Details</title>
+</head>
+<body>
+<div align="center">
+    <table border="1">
+        <tr>
+            <th>Symptoms</th>
+            <th>Diagnosis</th>
+            <th>Treatment Planned</th>
+            <th>Prescription</th>
+            <th>Revisit Required</th>
+            <th>Next Revisit Date</th>
+            <th>Frequency Revisit</th>
+            <th>Patient Appointment Id</th>
+        </tr>
+        <tr th:each="prescription : ${prescriptionlist}">
+            <td th:text="${prescription.symptoms}"></td>
+            <td th:text="${prescription.diagnosis}"></td>
+            <td th:text="${prescription.treatment_planned}"></td>
+            <td th:text="${prescription.prescription}"></td>
+            <td th:text="${prescription.revisit_required}"></td>
+            <td th:text="${prescription.next_revisit_date}"></td>
+            <td th:text="${prescription.frequency_revisit}"></td>
+            <td th:text="${prescription.pappointmentid}"></td>
+        </tr>
+    </table>
+    <a th:href="@{/}">Logout</a>
+</div>
+</body>
+</html>

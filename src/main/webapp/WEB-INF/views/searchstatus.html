@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Check Appointment Status</title>
+</head>
+<body>
+<marquee behavior="alternate" bgcolor="green"><h1>Check your Status here!</h1></marquee>
+<form th:action="@{/getAppointmentStatustDetails}" method="get">
+    ENTER APPOINTMENT_ID TO CHECK APPOINTMENT STATUS:
+    <input type="text" name="appointment_id" />
+    <input type="submit" value="Submit" />
+</form>
+</body>
+</html>

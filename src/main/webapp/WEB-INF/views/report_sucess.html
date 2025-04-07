@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Report Status</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>Your report was successfully sent to Admin!</h1>
+    <h1 style="color:green;">Your Request ID is: <span th:text="${user1.id}">Request ID</span></h1>
+    <button><a th:href="@{/}">Go to Homepage</a></button>
+</div>
+
+</body>
+</html>

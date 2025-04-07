@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Clinic Information</title>
+</head>
+<body>
+
+<table border="1">
+    <tr>
+        <th>clinic_id</th>
+        <th>clinic_name</th>
+        <th>Address</th>
+        <th>Facilities Available</th>
+        <th>Contact_number</th>
+        <th>website</th>
+        <th>locality/Pincode</th>
+        <th>Specialty</th>
+        <th>Availability</th>
+        <th>ID</th>
+        <th>Appointment Booking</th>
+    </tr>
+    <tr th:each="clinic : ${list}">
+        <td th:text="${clinic.clinic_id}">clinic_id</td>
+        <td th:text="${clinic.clinic_name}">clinic_name</td>
+        <td th:text="${clinic.address}">address</td>
+        <td th:text="${clinic.facilities_available}">facilities_available</td>
+        <td th:text="${clinic.contact_number}">contact_number</td>
+        <td th:text="${clinic.website}">website</td>
+        <td th:text="${clinic.pincode}">pincode</td>
+        <td th:text="${clinic.speciality}">speciality</td>
+        <td th:text="${clinic.availability}">availability</td>
+        <td th:text="${clinic.id}">id</td>
+        <td>
+            <button>
+                <a th:href="@{/appointmentbooking}">Book Your Appointment</a>
+            </button>
+        </td>
+    </tr>
+</table>
+
+<div align="center">
+    <a th:href="@{/}">Logout</a>
+</div>
+
+</body>
+</html>
