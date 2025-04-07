@@ -1,29 +1,232 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="ISO-8859-1">
-    <title>User Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login - Health Inspector</title>
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: #2e7d32; /* Green theme */
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 24px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #ffca28; /* Yellow hover effect */
+        }
+
+        /* Login Section */
+        .login-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .login-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-size: 28px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-group label .mandatory {
+            color: red;
+            font-size: 16px;
+            margin-left: 4px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background-color: #2e7d32;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-login:hover {
+            background-color: #1b5e20;
+        }
+
+        .go-back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #2e7d32;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        .go-back:hover {
+            color: #1b5e20;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 14px;
+        }
+    </style>
+    <script type="text/javascript">
+        function loginVal() {
+            const form = document.forms['user'];
+
+            // Required fields with patterns
+            const requiredFields = [
+                { name: 'idd', label: 'User Registration ID', pattern: /^[0-9]{4,}$/, error: 'User Registration ID must be at least 4 digits long and contain only digits.' },
+                { name: 'password', label: 'Password', pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, error: 'Password must be at least 8 characters long and contain at least one letter and one number.' }
+            ];
+
+            // Check for empty required fields and pattern validation
+            for (let field of requiredFields) {
+                const value = form[field.name].value.trim();
+                if (value === '') {
+                    alert(`${field.label} is required.`);
+                    form[field.name].focus();
+                    return false;
+                }
+                if (!field.pattern.test(value)) {
+                    alert(field.error);
+                    form[field.name].focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    </script>
 </head>
 <body>
-<div align="center">
-    <marquee behavior="alternate" bgcolor="green"><h1>User Login</h1></marquee>
-    <form name="user" th:action="@{/doctor}" method="post" onsubmit="return loginVal()">
-        <table style="width: 100%;">
-            <tr>
-                <td>User Registration ID:</td>
-                <td><input type="text" placeholder="Enter your User Id" name="idd" required pattern="^[0-9]+$" title="It contains only digits" /></td>
-            </tr>
-            <tr>
-                <td>Password:</td>
-                <td><input type="password" placeholder="Enter your Password" name="password" required /></td>
-            </tr>
-        </table>
-        <br>
-        <input type="submit" value="Submit" />
-        <br><br>
-        <a th:href="@{/}">Go Back</a>
-    </form>
-</div>
+<!-- Navigation Bar -->
+<nav class="navbar">
+    <div class="container">
+        <h1>Health Inspector</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/AdminLogin">Admin Login</a>
+            <a href="/NewUserRegistration">New User</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Login Section -->
+<section class="login-section">
+    <div class="login-card">
+        <h2>User Login</h2>
+        <form name="user" th:action="@{/doctor}" method="post" onsubmit="return loginVal()">
+            <div class="form-group">
+                <label for="idd">User Registration ID<span class="mandatory">*</span></label>
+                <input type="text" id="idd" placeholder="Enter your User ID" name="idd" required pattern="^[0-9]{4,}$" title="User Registration ID must be at least 4 digits long and contain only digits"/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password<span class="mandatory">*</span></label>
+                <input type="password" id="password" placeholder="Enter your Password" name="password" required pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and contain at least one letter and one number"/>
+            </div>
+            <button type="submit" class="btn-login">Submit</button>
+            <a th:href="@{/}" class="go-back">Go Back</a>
+        </form>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>© 2025 Health Inspector. All rights reserved.</p>
+</footer>
 </body>
 </html>
