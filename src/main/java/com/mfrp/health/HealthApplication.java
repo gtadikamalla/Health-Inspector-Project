@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan("com.controller")
+@ComponentScan(basePackages = {"com.mfrp", "com.service", "com.controller"})
 public class HealthApplication {
 
 	public static void main(String[] args) {

@@ -3,6 +3,7 @@ package com.controller;
 import com.mfrp.model.ContactForm;
 import com.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@ComponentScan
 public class ContactController {
 
     @Autowired
@@ -18,7 +20,7 @@ public class ContactController {
     @GetMapping("/contact")
     public String showContactForm(Model model) {
         model.addAttribute("contactForm", new ContactForm());
-        return "views/dologin"; // Return the homepage template
+        return "index1"; // Return the homepage template
     }
 
     @PostMapping("/contact")
