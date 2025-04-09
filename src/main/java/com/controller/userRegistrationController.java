@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dregister.dao.regvsave;
-
+import jakarta.validation.Valid;
 
 import com.mfrp.model.registrationModel;
 
@@ -24,7 +25,16 @@ public class userRegistrationController {
 	public regvsave regvsavee;
 	
 	@PostMapping("/addUserDetail1")
-	public String addUserDetail(@ModelAttribute("username") registrationModel user, Model model) {
+	public String addUserDetail(@ModelAttribute("username") registrationModel user, BindingResult result, Model model) {
+
+		if (!user.getPassword().equals(user.getConfirm_password())) {
+			result.rejectValue("confirmPassword", "error.confirmPassword", "Passwords do not match.");
+		}
+
+		// If there are validation errors, return to the registration page
+		if (result.hasErrors()) {
+			return "user-registration"; // Replace with the name of your registration page template
+		}
 		
 		String result_page=null;	
 		String insertUserDetails = regvsavee.userDetails(user);

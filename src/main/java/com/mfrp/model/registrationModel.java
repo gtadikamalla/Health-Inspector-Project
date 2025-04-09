@@ -15,6 +15,8 @@ public class registrationModel {
 	
 	 String gender;
 	 long contact_number;
+
+
 	 
 	public long getContact_number() {
 		return contact_number;
@@ -25,7 +27,18 @@ public class registrationModel {
 	int id;
 	 
 	String password;
-	 String email;
+
+	String confirm_password;
+
+	public String getConfirm_password() {
+		return confirm_password;
+	}
+
+	public void setConfirm_password(String confirm_password) {
+		this.confirm_password = confirm_password;
+	}
+
+	String email;
 	 String category;
 	public String getCategory() {
 		return category;

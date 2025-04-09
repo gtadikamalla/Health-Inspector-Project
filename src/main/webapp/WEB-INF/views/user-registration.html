@@ -1,334 +1,426 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Registration - Health Inspector</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Roboto', sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - Health Inspector</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Add reCAPTCHA script -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Add Font Awesome for the eye icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
 
-    body {
-        background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
-        color: #333;
-        line-height: 1.6;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+        body {
+            background: linear-gradient(to bottom, #f4f4f4, #e0e0e0);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    /* Navigation Bar */
-    .navbar {
-        background-color: #2e7d32; /* Green theme */
-        padding: 15px 0;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-    }
+        /* Navigation Bar */
+        .navbar {
+            background-color: #2e7d32; /* Green theme */
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
 
-    .navbar .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 20px;
-    }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-    .navbar h1 {
-        color: white;
-        font-size: 24px;
-    }
+        .navbar h1 {
+            color: white;
+            font-size: 24px;
+        }
 
-    .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 20px;
-        font-size: 16px;
-        transition: color 0.3s ease;
-    }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
 
-    .navbar a:hover {
-        color: #ffca28; /* Yellow hover effect */
-    }
+        .navbar a:hover {
+            color: #ffca28; /* Yellow hover effect */
+        }
 
-    /* Registration Section */
-    .registration-section {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 50px 20px;
-    }
+        /* Registration Section */
+        .registration-section {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+        }
 
-    .registration-card {
-        background-color: white;
-        padding: 40px;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        width: 100%;
-    }
+        .registration-card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+        }
 
-    .registration-card h2 {
-        font-size: 28px;
-        color: #2e7d32;
-        margin-bottom: 20px;
-        text-align: center;
-    }
+        .registration-card h2 {
+            font-size: 28px;
+            color: #2e7d32;
+            margin-bottom: 20px;
+            text-align: center;
+        }
 
-    .form-group {
-        margin-bottom: 20px;
-    }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative; /* For positioning the eye icon */
+        }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 6px;
-        color: #495057;
-        font-weight: 500;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #495057;
+            font-weight: 500;
+        }
 
-    .form-group label .mandatory {
-        color: red;
-        font-size: 16px;
-        margin-left: 4px;
-    }
+        .form-group label .mandatory {
+            color: red;
+            font-size: 16px;
+            margin-left: 4px;
+        }
 
-    .form-group input[type="text"],
-    .form-group input[type="email"],
-    .form-group input[type="password"],
-    .form-group input[type="date"] {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ced4da;
-        border-radius: 8px;
-        transition: border-color 0.3s ease;
-    }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
 
-    .form-group input:focus {
-        border-color: #2e7d32;
-        outline: none;
-    }
+        .form-group input:focus {
+            border-color: #2e7d32;
+            outline: none;
+        }
 
-    .form-radio {
-        margin-bottom: 20px;
-    }
+        /* Eye icon styling */
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 18px;
+        }
 
-    .form-radio label {
-        display: inline-block;
-        margin-right: 15px;
-        color: #495057;
-    }
+        .password-toggle:hover {
+            color: #2e7d32;
+        }
 
-    .form-radio label .mandatory {
-        color: red;
-        font-size: 16px;
-        margin-left: 4px;
-    }
+        .form-group.password-group {
+            position: relative;
+        }
 
-    .form-radio input[type="radio"] {
-        margin-right: 8px;
-    }
+        .form-group.password-group input {
+            padding-right: 40px; /* Space for the eye icon */
+        }
 
-    .btn-group {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 20px;
-    }
+        .form-radio {
+            margin-bottom: 20px;
+        }
 
-    .btn {
-        padding: 12px 20px;
-        border: none;
-        font-size: 16px;
-        cursor: pointer;
-        border-radius: 6px;
-        transition: background-color 0.3s ease;
-        text-align: center;
-        text-decoration: none;
-    }
+        .form-radio label {
+            display: inline-block;
+            margin-right: 15px;
+            color: #495057;
+        }
 
-    .btn-success {
-        background-color: #2e7d32;
-        color: white;
-        flex: 1;
-        margin-right: 10px;
-    }
+        .form-radio label .mandatory {
+            color: red;
+            font-size: 16px;
+            margin-left: 4px;
+        }
 
-    .btn-success:hover {
-        background-color: #1b5e20;
-    }
+        .form-radio input[type="radio"] {
+            margin-right: 8px;
+        }
 
-    .btn-warning {
-        background-color: #ffca28;
-        color: #212529;
-        flex: 1;
-    }
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
 
-    .btn-warning:hover {
-        background-color: #e0a800;
-    }
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+        }
 
-    .error {
-        color: red;
-        font-size: 0.85em;
-        display: block;
-        margin-top: 5px;
-    }
+        .btn-success {
+            background-color: #2e7d32;
+            color: white;
+            flex: 1;
+            margin-right: 10px;
+        }
 
-    /* Footer */
-    .footer {
-        background-color: #2e7d32;
-        color: white;
-        text-align: center;
-        padding: 20px 0;
-    }
+        .btn-success:hover {
+            background-color: #1b5e20;
+        }
 
-    .footer p {
-        font-size: 14px;
-    }
-  </style>
-  <script type="text/javascript">
-    function regValidate() {
-        const form = document.forms['useRegForm'];
+        .btn-warning {
+            background-color: #ffca28;
+            color: #212529;
+            flex: 1;
+        }
 
-        // Required fields
-        const requiredFields = [
-            { name: 'first_name', label: 'First Name', pattern: /^[A-Za-z]+$/, error: 'First Name must contain only alphabets.' },
-            { name: 'last_name', label: 'Last Name', pattern: /^[A-Za-z]+$/, error: 'Last Name must contain only alphabets.' },
-            { name: 'contact_number', label: 'Mobile Number', pattern: /^[6-9][0-9]{9}$/, error: 'Mobile Number must be 10 digits starting with 6-9.' },
-            { name: 'dob', label: 'Date of Birth', error: 'Date of Birth is required.' },
-            { name: 'id', label: 'User ID', pattern: /^[0-9]+$/, error: 'User ID must contain only digits.' },
-            { name: 'password', label: 'Password', pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, error: 'Password must be at least 8 characters long and contain at least one letter and one number.' },
-            { name: 'email', label: 'Email', pattern: /^\w+(\.-)?(\w+(\.-)?)*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/, error: 'Please enter a valid email address (e.g., abc@gmail.com).' }
-        ];
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
 
-        // Check for empty required fields and pattern validation
-        for (let field of requiredFields) {
-            const value = form[field.name].value.trim();
-            if (value === '') {
-                alert(`${field.label} is required.`);
-                form[field.name].focus();
+        .error {
+            color: red;
+            font-size: 0.85em;
+            display: block;
+            margin-top: 5px;
+        }
+
+        /* CAPTCHA Styling */
+        .captcha-group {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .captcha-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #495057;
+            font-weight: 500;
+        }
+
+        .captcha-group label .mandatory {
+            color: red;
+            font-size: 16px;
+            margin-left: 4px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #2e7d32;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .footer p {
+            font-size: 14px;
+        }
+    </style>
+    <script type="text/javascript">
+        function regValidate() {
+            const form = document.forms['useRegForm'];
+
+            // Required fields
+            const requiredFields = [
+                { name: 'first_name', label: 'First Name', pattern: /^[A-Za-z]+$/, error: 'First Name must contain only alphabets.' },
+                { name: 'last_name', label: 'Last Name', pattern: /^[A-Za-z]+$/, error: 'Last Name must contain only alphabets.' },
+                { name: 'contact_number', label: 'Mobile Number', pattern: /^[6-9][0-9]{9}$/, error: 'Mobile Number must be 10 digits starting with 6-9.' },
+                { name: 'dob', label: 'Date of Birth', error: 'Date of Birth is required.' },
+                { name: 'id', label: 'User ID', pattern: /^[0-9]+$/, error: 'User ID must contain only digits.' },
+                { name: 'password', label: 'Password', pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, error: 'Password must be at least 8 characters long and contain at least one letter and one number.' },
+                { name: 'confirm_password', label: 'Confirm Password', error: 'Confirm Password is required.' },
+                { name: 'email', label: 'Email', pattern: /^\w+(\.-)?(\w+(\.-)?)*@[a-zA-Z]+\.[a-zA-Z]{2,3}$/, error: 'Please enter a valid email address (e.g., abc@gmail.com).' }
+            ];
+
+            // Check for empty required fields and pattern validation
+            for (let field of requiredFields) {
+                const value = form[field.name].value.trim();
+                if (value === '') {
+                    alert(`${field.label} is required.`);
+                    form[field.name].focus();
+                    return false;
+                }
+                if (field.pattern && !field.pattern.test(value)) {
+                    alert(field.error);
+                    form[field.name].focus();
+                    return false;
+                }
+            }
+
+            // Password and Confirm Password matching validation
+            const password = form['password'].value.trim();
+            const confirmPassword = form['confirm_password'].value.trim();
+            if (password !== confirmPassword) {
+                alert('Passwords do not match. Please ensure both passwords are the same.');
+                form['confirm_password'].focus();
                 return false;
             }
-            if (field.pattern && !field.pattern.test(value)) {
-                alert(field.error);
-                form[field.name].focus();
+
+            // Additional validation for Date of Birth (must be in the past)
+            const dob = new Date(form['dob'].value);
+            const today = new Date();
+            if (dob >= today) {
+                alert('Date of Birth must be in the past.');
+                form['dob'].focus();
                 return false;
             }
+
+            // Gender validation (must select one)
+            const gender = form['gender'].value;
+            if (!gender) {
+                alert('Please select a Gender.');
+                return false;
+            }
+
+            // Category validation (must select one)
+            const category = form['category'].value;
+            if (!category) {
+                alert('Please select a Category (Doctor or Patient).');
+                return false;
+            }
+
+            // CAPTCHA validation (reCAPTCHA)
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                alert('Please complete the CAPTCHA to verify you are not a robot.');
+                return false;
+            }
+
+            return true;
         }
 
-        // Additional validation for Date of Birth (must be in the past)
-        const dob = new Date(form['dob'].value);
-        const today = new Date();
-        if (dob >= today) {
-            alert('Date of Birth must be in the past.');
-            form['dob'].focus();
-            return false;
+        // Function to toggle password visibility
+        function togglePassword(fieldId, iconId) {
+            const passwordField = document.getElementById(fieldId);
+            const toggleIcon = document.getElementById(iconId);
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            }
         }
-
-        // Gender validation (must select one)
-        const gender = form['gender'].value;
-        if (!gender) {
-            alert('Please select a Gender.');
-            return false;
-        }
-
-        // Category validation (must select one)
-        const category = form['category'].value;
-        if (!category) {
-            alert('Please select a Category (Doctor or Patient).');
-            return false;
-        }
-
-        return true;
-    }
-  </script>
+    </script>
 </head>
 <body>
 <!-- Navigation Bar -->
 <nav class="navbar">
-  <div class="container">
-    <h1>Health Inspector</h1>
-    <div>
-      <a href="/">Home</a>
-      <a href="/AdminLogin">Admin Login</a>
-      <a href="/userlogin">User Login</a>
+    <div class="container">
+        <h1>Health Inspector</h1>
+        <div>
+            <a href="/">Home</a>
+            <a href="/AdminLogin">Admin Login</a>
+            <a href="/userlogin">User Login</a>
+        </div>
     </div>
-  </div>
 </nav>
 
 <!-- Registration Section -->
 <section class="registration-section">
-  <div class="registration-card">
-    <h2>User Registration</h2>
-    <form th:action="@{/addUserDetail1}" method="post" th:object="${username}" name="useRegForm" onsubmit="return regValidate()">
-      <div class="form-group">
-        <label for="first_name">First Name<span class="mandatory">*</span></label>
-        <input type="text" id="first_name" name="first_name" th:value="${username.first_name}" pattern="^[A-Za-z]+$" title="Only alphabets allowed" required />
-        <span th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}" class="error"></span>
-      </div>
+    <div class="registration-card">
+        <h2>User Registration</h2>
+        <form th:action="@{/addUserDetail1}" method="post" th:object="${username}" name="useRegForm" onsubmit="return regValidate()">
+            <div class="form-group">
+                <label for="first_name">First Name<span class="mandatory">*</span></label>
+                <input type="text" id="first_name" name="first_name" th:value="${username.first_name}" pattern="^[A-Za-z]+$" title="Only alphabets allowed" required />
+                <span th:if="${#fields.hasErrors('first_name')}" th:errors="*{first_name}" class="error"></span>
+            </div>
 
-      <div class="form-group">
-        <label for="last_name">Last Name<span class="mandatory">*</span></label>
-        <input type="text" id="last_name" name="last_name" th:value="${username.last_name}" pattern="^[A-Za-z]+$" title="Only alphabets allowed" required />
-        <span th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}" class="error"></span>
-      </div>
+            <div class="form-group">
+                <label for="last_name">Last Name<span class="mandatory">*</span></label>
+                <input type="text" id="last_name" name="last_name" th:value="${username.last_name}" pattern="^[A-Za-z]+$" title="Only alphabets allowed" required />
+                <span th:if="${#fields.hasErrors('last_name')}" th:errors="*{last_name}" class="error"></span>
+            </div>
 
-      <div class="form-group">
-        <label for="dob">Date of Birth<span class="mandatory">*</span></label>
-        <input type="date" id="dob" name="dob" th:value="${username.dob}" required />
-      </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth<span class="mandatory">*</span></label>
+                <input type="date" id="dob" name="dob" th:value="${username.dob}" required />
+            </div>
 
-      <div class="form-group form-radio">
-        <label>Gender<span class="mandatory">*</span></label>
-        <label><input type="radio" name="gender" value="Male" th:checked="${username.gender == 'Male'}" required /> Male</label>
-        <label><input type="radio" name="gender" value="Female" th:checked="${username.gender == 'Female'}" /> Female</label>
-      </div>
+            <div class="form-group form-radio">
+                <label>Gender<span class="mandatory">*</span></label>
+                <label><input type="radio" name="gender" value="Male" th:checked="${username.gender == 'Male'}" required /> Male</label>
+                <label><input type="radio" name="gender" value="Female" th:checked="${username.gender == 'Female'}" /> Female</label>
+            </div>
 
-      <div class="form-group">
-        <label for="contact_number">Mobile Number<span class="mandatory">*</span></label>
-        <input type="text" id="contact_number" name="contact_number" th:value="${username.contact_number}" pattern="[6-9]{1}[0-9]{9}" title="10 digits starting from 6-9" required />
-        <span th:if="${#fields.hasErrors('contact_number')}" th:errors="*{contact_number}" class="error"></span>
-      </div>
+            <div class="form-group">
+                <label for="contact_number">Mobile Number<span class="mandatory">*</span></label>
+                <input type="text" id="contact_number" name="contact_number" th:value="${username.contact_number}" pattern="[6-9]{1}[0-9]{9}" title="10 digits starting from 6-9" required />
+                <span th:if="${#fields.hasErrors('contact_number')}" th:errors="*{contact_number}" class="error"></span>
+            </div>
 
-      <div class="form-group">
-        <label for="id">User ID<span class="mandatory">*</span></label>
-        <input type="text" id="id" name="id" th:value="${username.id}" pattern="^[0-9]+$" title="Digits only" required />
-      </div>
+            <div class="form-group">
+                <label for="id">User ID<span class="mandatory">*</span></label>
+                <input type="text" id="id" name="id" th:value="${username.id}" pattern="^[0-9]+$" title="Digits only" required />
+            </div>
 
-      <div class="form-group">
-        <label for="password">Password<span class="mandatory">*</span></label>
-        <input type="password" id="password" name="password" th:value="${username.password}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and contain at least one letter and one number" required />
-      </div>
+            <div class="form-group password-group">
+                <label for="password">Password<span class="mandatory">*</span></label>
+                <input type="password" id="password" name="password" th:value="${username.password}" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" title="Password must be at least 8 characters long and contain at least one letter and one number" required />
+                <i class="fas fa-eye password-toggle" id="togglePassword" onclick="togglePassword('password', 'togglePassword')"></i>
+            </div>
 
-      <div class="form-group">
-        <label for="email">Email<span class="mandatory">*</span></label>
-        <input type="email" id="email" name="email" th:value="${username.email}" pattern="\w+(\.-)?(\w+(\.-)?)*@[a-zA-Z]+\.[a-zA-Z]{2,3}" title="Example: abc@gmail.com" required />
-      </div>
+            <div class="form-group password-group">
+                <label for="confirm_password">Confirm Password<span class="mandatory">*</span></label>
+                <input type="password" id="confirm_password" name="confirm_password" required />
+                <i class="fas fa-eye password-toggle" id="toggleConfirmPassword" onclick="togglePassword('confirm_password', 'toggleConfirmPassword')"></i>
+                <span th:if="${#fields.hasErrors('confirm_password')}" th:errors="*{confirm_password}" class="error"></span>
+            </div>
 
-      <div class="form-group form-radio">
-        <label>Category<span class="mandatory">*</span></label>
-        <label><input type="radio" name="category" value="doctor" th:checked="${username.category == 'doctor'}" required /> Doctor</label>
-        <label><input type="radio" name="category" value="patient" th:checked="${username.category == 'patient'}" /> Patient</label>
-      </div>
+            <div class="form-group">
+                <label for="email">Email<span class="mandatory">*</span></label>
+                <input type="email" id="email" name="email" th:value="${username.email}" pattern="\w+(\.-)?(\w+(\.-)?)*@[a-zA-Z]+\.[a-zA-Z]{2,3}" title="Example: abc@gmail.com" required />
+            </div>
 
-      <div class="btn-group">
-        <input type="submit" value="Register" class="btn btn-success" />
-        <a href="/" class="btn btn-warning">Back</a>
-      </div>
-    </form>
-  </div>
+            <div class="form-group form-radio">
+                <label>Category<span class="mandatory">*</span></label>
+                <label><input type="radio" name="category" value="doctor" th:checked="${username.category == 'doctor'}" required /> Doctor</label>
+                <label><input type="radio" name="category" value="patient" th:checked="${username.category == 'patient'}" /> Patient</label>
+            </div>
+
+            <div class="captcha-group">
+                <label>CAPTCHA Verification<span class="mandatory">*</span></label>
+                <div class="g-recaptcha" data-sitekey="YOUR_RECAPTCHA_SITE_KEY"></div>
+            </div>
+
+            <div class="btn-group">
+                <input type="submit" value="Register" class="btn btn-success" />
+                <a href="/" class="btn btn-warning">Back</a>
+            </div>
+        </form>
+    </div>
 </section>
 
 <!-- Footer -->
 <footer class="footer">
-  <p>© 2025 Health Inspector. All rights reserved.</p>
+    <p>© 2025 Health Inspector. All rights reserved.</p>
 </footer>
 </body>
 </html>
